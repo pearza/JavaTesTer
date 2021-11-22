@@ -8,12 +8,10 @@ public class EmployeeSalary {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		getStarted();
-		
-		
+
+
 
 	}
-
-
 	public static void getStarted() {
 		Scanner kb = new Scanner(System.in);
 		System.out.println("กรุณาใส่จำนวนพนักงาน");
@@ -25,6 +23,8 @@ public class EmployeeSalary {
 		int[] employ_wage = new int[number];
 		int[] employ_day = new int[number];
 		int[] employ_salary = new int[number];
+		int[] employ_withdraw = new int[number];
+
 		System.out.println("Your number of employee is "+number);
 		int sum = 0;
 		Stack<Integer> stack = new Stack<Integer>();
@@ -37,23 +37,48 @@ public class EmployeeSalary {
 			employ_wage[i] = kb.nextInt();
 			employ_day[i] = kb.nextInt();
 
+			// call fucntion waitdraw 
+
 			// call function
 			employ_salary[i] = getWork(employ_day[i],employ_wage[i]); // send work for day
 			stack.push(sum = sum+employ_salary[i]); //
-			
+
 			if(count == number) {
 				count =0; 
 				for (int j = 0; j < number; j++) {
 					count++;
-					System.out.println("ลำดับ["+count+"] ชื่อ=> "+employ_name[j]+" ค่าจ้าง=>"+employ_wage[j]+"บาท=>"+" วันที่ทำงาน=>"+employ_day[j]+"วัน เงินเดือนที่ได้รับ=>"+employ_salary[j]);	
+					System.out.println("ลำดับ["+count+"] ชื่อ=> "+employ_name[j]+" ค่าจ้าง=>"+employ_wage[j]+"บาท=>"+" วันที่ทำงาน=>"+employ_day[j]+"วัน เงินเดือนที่ได้รับ=>"+employ_salary[j]);
+					System.out.println();
 				}
-				System.out.println("ที่ต้องจ่ายทั้งหมด "+stack.pop());
+				
+				System.out.println("สรุปที่ต้องจ่ายทั้งหมด "+stack.pop());
 			}
 		}
 	}	   
 
 	public static int getWork(int day,int wage) {
+		Scanner kb = new Scanner(System.in);
+		String exit = "";
+		int i =0;
+		int withdraw = 0;
+		int keepwithdraw = 0;
+		do
+		{
+			System.out.println("พนักงานมียอดเบิกหรือไม่ ถ้าไม่มีกรุณาใส่ n ถ้ามีให้ใส่ yes");
+			exit = kb.next();
+			
+			if(exit.equals("y")) {
+				i++;
+				System.out.println("กรุณาใส่จำนวนที่พนักงานเบิกครั้งที่ "+i+" ");
+				withdraw = kb.nextInt(); 
+				keepwithdraw = keepwithdraw+withdraw; //เก็บยอดที่เบิก		
+			}
+			
+		}
+		while (!exit.equals("no"));
+		
 		int work = day * wage;
+		work = work-keepwithdraw;
 		return work;
 
 	}
