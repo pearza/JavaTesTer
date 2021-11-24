@@ -8,13 +8,13 @@ public class EmployeeSalary {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		getStarted();
-		
+
+
+
 	}
-
-
 	public static void getStarted() {
 		Scanner kb = new Scanner(System.in);
-		System.out.println("Please input your number of employee");
+		System.out.println("กรุณาใส่จำนวนพนักงาน");
 		int number = 0;
 		int count = 0;
 		number = kb.nextInt();
@@ -23,50 +23,63 @@ public class EmployeeSalary {
 		int[] employ_wage = new int[number];
 		int[] employ_day = new int[number];
 		int[] employ_salary = new int[number];
+		int[] employ_withdraw = new int[number];
+
 		System.out.println("Your number of employee is "+number);
 		int sum = 0;
 		Stack<Integer> stack = new Stack<Integer>();
 		// รับข้อมุลจาก user จำนวนของพนักงาน
+		System.out.println("----****** กรุณาใส่ชื่อ,ค่าจ้าง,จำนวนวันที่ทำงานโดยแต่ละครั้งที่ใส่ค่าให้กด space bar ******----");
 		for (int i = 0; i < number; i++) {
 			count++;
-			System.out.print("input Name and Wage of employee and day for work "+"["+count+"] ");
+			System.out.print("["+count+"] "+"กรุณาใส่ชื่อ,ค่าจ้าง,จำนวนวันที่ทำงาน -> ");
 			employ_name[i] = kb.next(); 
-			employ_wage[i] = kb.nextInt(); 
+			employ_wage[i] = kb.nextInt();
 			employ_day[i] = kb.nextInt();
-			employ_salary[i] = getWork(employ_day[i],employ_wage[i]); // send work for day
-			stack.push(sum = sum+employ_salary[i]);
-			//output
-			getData(number,employ_name[i], employ_wage[i],employ_day[i],employ_salary[i]);
 
-			if(count == number) {	
-				System.out.println("ที่ต้องจ่ายทั้งหมด "+stack.pop());
-				/*	count =0;
+			// call fucntion waitdraw 
+
+			// call function
+			employ_salary[i] = getWork(employ_day[i],employ_wage[i]); // send work for day
+			stack.push(sum = sum+employ_salary[i]); //
+
+			if(count == number) {
+				count =0; 
 				for (int j = 0; j < number; j++) {
 					count++;
-					System.out.println("Employ["+count+"] ชื่อ => "+employ_name[j]+" ค่าจ้าง => "+employ_wage[j]+"บาท =>"+" วันที่ทำงาน =>"+employ_day[j]+"วัน เงินเดือนที่ได้รับ =>"+employ_salary[j]);
+					System.out.println("ลำดับ["+count+"] ชื่อ=> "+employ_name[j]+" ค่าจ้าง=>"+employ_wage[j]+"บาท=>"+" วันที่ทำงาน=>"+employ_day[j]+"วัน เงินเดือนที่ได้รับ=>"+employ_salary[j]);
+					System.out.println();
 				}
-				 */
+				
+				System.out.println("สรุปที่ต้องจ่ายทั้งหมด "+stack.pop());
 			}
 		}
-	}
+	}	   
+
 	public static int getWork(int day,int wage) {
+		Scanner kb = new Scanner(System.in);
+		String exit = "";
+		int i =0;
+		int withdraw = 0;
+		int keepwithdraw = 0;
+		do
+		{
+			System.out.println("พนักงานมียอดเบิกหรือไม่ ถ้าไม่มีกรุณาใส่ n ถ้ามีให้ใส่ yes");
+			exit = kb.next();
+			
+			if(exit.equals("y")) {
+				i++;
+				System.out.println("กรุณาใส่จำนวนที่พนักงานเบิกครั้งที่ "+i+" ");
+				withdraw = kb.nextInt(); 
+				keepwithdraw = keepwithdraw+withdraw; //เก็บยอดที่เบิก		
+			}
+			
+		}
+		while (!exit.equals("no"));
+		
 		int work = day * wage;
+		work = work-keepwithdraw;
 		return work;
 
 	}
-	public static void getData(int number,String name ,int wage,int day,int salary) {
-		int count;
-		//ประกาศตัวแปร
-		int num = number;
-		String name1  = name;
-		int wage1 = wage;	
-		int day1 = day;
-		int salary1 = salary;
-		System.out.println("Employ["+num+"] ชื่อ => "+name1+" ค่าจ้าง => "+wage1+"บาท =>"+" วันที่ทำงาน =>"+day1+"วัน เงินเดือนที่ได้รับ =>"+salary1);
-
-
-
-	}
-
-
 }
