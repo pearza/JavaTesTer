@@ -11,22 +11,26 @@ public class DataemployeesClass {
 	private String employ_name;
 	private int employ_wage;
 	private int employ_day;
+	private int employ_salary;
+	private int employ_withdraw;
+	private int employ_remain;
 
 	// default constructor
 	public DataemployeesClass() {
 
 	}
 	// Constructor
-	public DataemployeesClass(String name,int wage,int day) {
+	private DataemployeesClass(String name,int wage,int day) {
 		this.employ_name = name;
 		this.employ_wage = wage;
 		this.employ_day = day;
 	}	
 	// setter data 
-	public void setData(String name,int wage,int day) {
+	private void setData(String name,int wage,int day,int withdraw) {  
 		this.employ_name = name;
 		this.employ_wage = wage;
 		this.employ_day = day;
+		this.employ_withdraw = withdraw;
 	} 
 	// getter data
 	public String getDataname() {
@@ -38,8 +42,24 @@ public class DataemployeesClass {
 	public int getDataday() {
 		return  employ_day;
 	}
+	public int getDatasalary() {
+		return  employ_salary;
+	}
+	public int getDatawaithdraw() {
+		return  employ_withdraw;
+	}
+	public int getDataRemain() {
+		return  employ_remain;
+	}
+	
+	
+	// get withdraw
+	private static int getWithdraw(int w,int d ,int wd) {
+		int wd1 = getSalary(w,d) - wd;
+		return  wd1;
+	}
 	// get working
-	public int getSalary(int w , int d) {
+	private static int getSalary(int w , int d) {
 		int work = w * d;
 		return work;
 	}
@@ -57,32 +77,46 @@ public class DataemployeesClass {
 	// get started()
 	public void getStart () {
 		Scanner kb = new Scanner(System.in);
-		getdatetime();
-		
-		System.out.println("plese input number of employee");
-		int number = kb.nextInt();
 		int count = 0;
-		System.out.println("plese input Data employee -> Name , Wage , Day");
+		getdatetime();
+		System.out.print("plese input number of employee ");
+		int number = kb.nextInt();
+		System.out.println("plese input Data employee -> Name , Wage , Day , Withdraw");
 		Stack stack = new Stack();
+		int remain = 0;
 		for (int i = 0; i < number; i++) {
+			count++;
+			//System.out.print("(" +count+") ");
 			String name = kb.next();
 			int wage = kb.nextInt();
 			int day = kb.nextInt();
-			setData(name, wage, day);
+			int withdraw = kb.nextInt();
+			setData(name, wage, day,withdraw);
+			remain = remain + getWithdraw(employ_wage,employ_day,employ_withdraw);
 			stack.add(toString());
-			count++;
+			
+			
 		}
 		// print all data of employee
 		if(count == number) {
+			System.out.println();
+			int a = 0;
 			for (int i = 0; i < stack.size(); i++) {
-				System.out.println(stack.get(i));	
+				a++;
+				System.out.println("("+a+") "+stack.get(i));	
 				
 			}
+			
+			System.out.println("*** All remaining = "+remain +" Bath ***");
 		}
 	}
 	// get tostring()
 	public String toString() {
-		return "Name "+employ_name+" Wage "+employ_wage+" Wokring Day "+employ_day+" Salary "+getSalary(this.employ_wage,employ_day);
+		return "Name : "+getDataname()+" \n"
+				+"  Wage : "+getDatawage()+" \n"
+				+"  Wokring Day : "+getDataday()+" \n"
+				+"  Salary : "+getSalary(employ_wage,employ_day)+" - "+ getDatawaithdraw()+"(withdraw)\n"
+				+"  Remaining : "+getWithdraw(employ_wage,employ_day,employ_withdraw)+" \n";
 	}
 
 }

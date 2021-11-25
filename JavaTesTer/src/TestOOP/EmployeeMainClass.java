@@ -11,12 +11,6 @@ public class EmployeeMainClass {
 		// TODO Auto-generated method stub
 		DataemployeesClass employ = new DataemployeesClass();
 		employ.getStart();
-		// Heelo sss
-		
-		
-		
-		
-		
 	}
 
 }
