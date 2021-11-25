@@ -12,6 +12,7 @@ public class EmployeeMainClass {
 		DataemployeesClass employ = new DataemployeesClass();
 		employ.getStart();
 		// abs
+		// from window pc
 	}
 
 }
