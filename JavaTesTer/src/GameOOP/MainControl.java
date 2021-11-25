@@ -6,5 +6,9 @@ public class MainControl {
 		// TODO Auto-generated method stub
 		System.out.println("Hello welcome");
 	}
+	
+	public static void  getStarted() {
+		
+	}
 
 }
