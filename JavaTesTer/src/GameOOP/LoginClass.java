@@ -2,11 +2,13 @@ package GameOOP;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Scanner;
 
 public class LoginClass {
@@ -37,76 +39,39 @@ public class LoginClass {
 				check = false;
 			}
 		}while(check == true);
-		System.out.println("ID -> "+id);
-		Writer(id,pw);
+		createUser(id,pw);
 
 	}
-	private static void Writer(String id,String pw) {
-		try {
-			String nameuser = id;
-			
-			// check duplicate file อย่าลืมทำ **
-			// read file
-			int flag = checkFileUser(nameuser); // 1 = found , 0 = not found
-			
-			File myfile = new File("temp\\mygame\\"+nameuser+".txt");
-			System.out.println(myfile);
-			Scanner myReader = new Scanner(myfile); // หาไฟล์ไม่เจอ เพราะยังไม่มี
-			
-			while (myReader.hasNextLine()) {
-				String data = myReader.nextLine();
-				// check duplicate file 
-				if(data.equals("ID:"+nameuser)) {
-					System.out.println("pls input other username!");
-					myReader.close();
-					getlogin();
-				}else if(!data.equals("ID:"+nameuser)){
-					// write file
-					BufferedWriter out = new BufferedWriter(new OutputStreamWriter( //path file
-							new FileOutputStream("temp\\mygame\\"+nameuser+".txt"),"UTF-8"));
-					LocalDate date = LocalDate.now(); // Create a date object
-					out.write("ID:"+id+"\nPassword:"+pw+"\nCreateDate:"+date); // data in file
-					out.close();  
-				}
-				System.out.println(data);
+
+	private static void createUser (String id,String pw) {
+		try{
+			// Create new file
+			String path="temp\\mygame\\"+id+".txt";
+			File file = new File(path);
+			// If file doesn't exists, then create it
+			if (!file.exists()) {
+				System.out.println("Create USER");
+				file.createNewFile();
+				FileWriter fw = new FileWriter(file.getAbsoluteFile());
+				BufferedWriter bw = new BufferedWriter(fw);
+				Date date = new Date();
+				// Write in file
+				bw.write("\nUsername: "+id +"\nPassword "+pw + "\nDateCreate :"+date);
+				// Close connection
+				bw.close();
+			}else{ 
+				System.out.println("USER Duplicate!");
+				getlogin();
 			}
-			//myReader.close();		
-			
-		} catch (IOException e) {
-			System.err.println("IOException: " + e.getMessage());
-		} 
+		}
+		catch(Exception e){
+			System.out.println(e);
+		}
 	}
-	
-	private static int checkFileUser(String name) {
-		 File directory = new File("temp\\mygame\\");
-	        // store all names with same name
-	        // with/without extension
-	        String[] flist = directory.list(); //keep all file name 0,1,2,3 ++
-	        int flag = 0;
-	        if (flist == null) {
-	            System.out.println("Empty directory.");
-	        }else {
-	            // Linear search in the array
-	            for (int i = 0; i < flist.length; i++) {
-	                String filename = flist[i];
-	                if (filename.equalsIgnoreCase(name+".txt")) {
-	                    System.out.println(filename + " found");
-	                    flag = 1;
-	            
-	                }
-	            }
-	            
-	            
-	            
-	            
-	        }
-	        if (flag == 0) { 
-	            System.out.println("File Not Found");
-	        }
-			return flag;// 0,1
-	}
-	
-	
+
+
+
+
 	public String getId() {
 		return id;
 	}
