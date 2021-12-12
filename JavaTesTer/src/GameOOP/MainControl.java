@@ -15,12 +15,8 @@ public class MainControl {
 		Login();
 		
 	}
-
 	public static void Login() {
 		LoginClass login = new LoginClass(); // call instance loginclass
 		login.getlogin();
-
-
 	}
-
 }

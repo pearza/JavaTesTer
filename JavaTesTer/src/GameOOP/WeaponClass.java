@@ -4,7 +4,8 @@ public class WeaponClass {
 	private String wp_name;
 	private String wp_type;
 	private double wp_magazine;
-	private double wp_damage;
+	public double wp_damage;
+	
 	// Constructor 
 	 public WeaponClass() {
 		 
