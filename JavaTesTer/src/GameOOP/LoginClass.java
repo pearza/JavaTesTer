@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class LoginClass {
-	private static String id;
+	private static String id ;
 	private static String pass;
 
 	// Default constructor 
@@ -27,7 +27,7 @@ public class LoginClass {
 	public static void getlogin() {
 		Scanner kb = new Scanner(System.in);
 		boolean check = true;
-		do {	
+		do {
 			System.out.println("pls input User 8-10: ");
 			id = kb.next();
 			System.out.println("pls input Password 8-10: ");	
@@ -38,6 +38,7 @@ public class LoginClass {
 			}
 		}while(check == true);
 		createUser(id,pass);
+		
 	}
 	private static void createUser (String user,String pw) {
 		try{
@@ -59,7 +60,8 @@ public class LoginClass {
 				bw.write("\nUsername: "+user +"\nPassword "+pw + "\nDateCreate :"+date);
 				// Close connection
 				bw.close();
-				System.out.println("Create USER");
+				System.out.println("Create USER SUCCESSFUL");
+				toCharacter(user);
 			}else{ 
 				System.out.println("USER Duplicate!");
 				getlogin();
@@ -68,12 +70,13 @@ public class LoginClass {
 		catch(Exception e){
 			System.out.println(e);
 		}
-		toCharacter();
+		
 	}
-	private static void toCharacter() {
+	private static void toCharacter(String user) {
 		CharacterClass ch = new CharacterClass();
-		ch.getStart();
+		ch.getStart(user);
 	}
+	
 	public String getId() {
 		return id;
 	}
